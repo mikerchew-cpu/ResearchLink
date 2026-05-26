@@ -1,0 +1,196 @@
+{
+  "common": {
+    "app_name": "ResearchLink Malaysia",
+    "tagline": "Malaysia's Verified Student Research Exchange Platform",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "close": "Close",
+    "search": "Search...",
+    "filter": "Filter",
+    "export": "Export",
+    "download": "Download",
+    "share": "Share",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "success": "Success",
+    "error": "Error",
+    "required": "Required"
+  },
+
+  "auth": {
+    "signin_title": "Welcome to ResearchLink",
+    "signin_subtitle": "Sign in with your .edu.my university email",
+    "signin_btn": "Sign in with Google (.edu.my)",
+    "signin_note": "Malaysian university emails only",
+    "not_edu_email": "This email is not a valid Malaysian university email. Please use your .edu.my institutional address.",
+    "welcome_back": "Welcome back, {{name}}!",
+    "first_time": "Welcome to ResearchLink!",
+    "consent_title": "Data Consent Settings",
+    "consent_subtitle": "Choose how you want to participate on this platform",
+    "consent_research": "Join academic research surveys as a respondent",
+    "consent_brand": "Join corporate brand campaigns (Insight Blast)",
+    "consent_note": "You can change these settings at any time in your profile.",
+    "consent_pdpa": "Your data is protected under the Personal Data Protection Act (PDPA) 2010 (Amendment 2024).",
+    "consent_required": "At least one consent is required to use the platform.",
+    "consent_save": "Save & Continue"
+  },
+
+  "nav": {
+    "feed": "Survey feed",
+    "my_surveys": "My surveys",
+    "post_survey": "Post survey",
+    "rewards": "Points & vouchers",
+    "profile": "Profile",
+    "admin": "Admin",
+    "logout": "Sign out"
+  },
+
+  "feed": {
+    "title": "Open surveys",
+    "greeting_morning": "Good morning, {{name}}",
+    "greeting_afternoon": "Good afternoon, {{name}}",
+    "greeting_evening": "Good evening, {{name}}",
+    "subtitle": "{{university}} · {{programme}} · {{credits}} credits",
+    "search_placeholder": "Search surveys...",
+    "filter_all": "All",
+    "no_surveys": "No surveys available right now. Check back soon.",
+    "respond_btn": "Respond",
+    "responded_btn": "Done!",
+    "points_label": "+{{points}} pts · ~{{minutes}} min",
+    "boosted_badge": "Boosted",
+    "target_label": "{{faculty}} · {{university}} · Year {{year}}",
+    "all_universities": "All universities",
+    "stats": {
+      "credits": "Credits",
+      "points": "Points",
+      "completed": "Completed",
+      "active_surveys": "Active surveys"
+    }
+  },
+
+  "post_survey": {
+    "title": "Post a survey",
+    "subtitle": "You need {{required}} credits to post. You have {{current}} credits.",
+    "not_enough_credits": "Insufficient credits",
+    "not_enough_message": "You need to complete {{needed}} more surveys to earn enough credits.",
+    "credit_banner_title": "Sufficient credits",
+    "credit_banner_body": "Researchers who complete surveys first typically get higher response rates.",
+    "form": {
+      "title_label": "Survey title",
+      "title_placeholder": "e.g. ZUS Coffee brand perception among XMUM students",
+      "description_label": "Description (optional)",
+      "description_placeholder": "Briefly describe your research purpose...",
+      "url_label": "Survey link (Google Form / Typeform)",
+      "url_placeholder": "https://forms.gle/...",
+      "target_responses_label": "Target responses",
+      "target_faculty_label": "Target faculty (optional)",
+      "target_faculty_placeholder": "e.g. Business, Engineering",
+      "target_year_label": "Target year of study (optional)",
+      "halal_label": "This survey complies with halal content standards (no alcohol, gambling, or prohibited content)",
+      "completion_token_label": "Completion token setup",
+      "completion_token_info": "This token ensures only respondents who actually complete your form receive points. Copy the token URL and paste it as your Google Form redirect URL.",
+      "copy_token_url": "Copy token URL",
+      "token_copied": "Copied!",
+      "submit_btn": "Post survey ({{credits}} credits)",
+      "moderation_note": "Your survey will be automatically screened. Approval is instant (if no flags) or within 24 hours."
+    },
+    "token_instructions": {
+      "title": "How to set up the completion token",
+      "step1": "Go to your Google Form → Settings → Presentation",
+      "step2": "Enable 'Confirmation URL' or 'Redirect to URL'",
+      "step3": "Paste the Token URL below as the redirect URL",
+      "step4": "Respondents will land on ResearchLink after completing, and points will be credited automatically"
+    }
+  },
+
+  "rewards": {
+    "title": "Points & Vouchers",
+    "points_balance": "{{points}} Points",
+    "redeem_subtitle": "Redeem points for vouchers",
+    "history_title": "Points history",
+    "earn_label": "+{{points}} pts",
+    "redeem_label": "-{{points}} pts",
+    "voucher_redeem_btn": "Redeem",
+    "voucher_confirm_title": "Confirm redemption",
+    "voucher_confirm_body": "Redeem {{points}} points for {{voucher}}?",
+    "insufficient_points": "Insufficient points. You need {{needed}} more points.",
+    "redeem_success": "Done! Your voucher code: {{code}}",
+    "expiry_warning": "Your points expire in {{days}} days. Redeem now!",
+    "vouchers": {
+      "shopee_rm2": "Shopee RM 2 voucher",
+      "shopee_rm5": "Shopee RM 5 voucher",
+      "tng_rm5":    "TNG eWallet RM 5 reload",
+      "tng_rm10":   "TNG eWallet RM 10 reload",
+      "grab_rm5":   "GrabFood RM 5 voucher",
+      "zus_rm5":    "ZUS Coffee RM 5 voucher"
+    }
+  },
+
+  "profile": {
+    "title": "My profile",
+    "edit_btn": "Edit profile",
+    "consent_section": "PDPA Consent settings",
+    "consent_research_label": "Academic surveys",
+    "consent_research_desc": "Participate in academic research as a respondent",
+    "consent_brand_label": "Brand surveys",
+    "consent_brand_desc": "Corporate Insight Blast campaigns",
+    "consent_whatsapp_label": "WhatsApp notifications",
+    "consent_whatsapp_desc": "Survey alerts via WhatsApp",
+    "data_rights_section": "Your data rights",
+    "download_data_btn": "Download my data (JSON)",
+    "download_data_desc": "PDPA 2024 right to data portability",
+    "delete_account_btn": "Delete account and all data",
+    "delete_account_warning": "This cannot be undone. All your data will be permanently deleted.",
+    "referral_section": "Invite friends",
+    "referral_code_label": "Your referral code",
+    "referral_copy_btn": "Copy link",
+    "referral_whatsapp_btn": "Share via WhatsApp",
+    "referral_stats": "{{count}} friends invited · {{points}} points earned"
+  },
+
+  "moderation": {
+    "report_btn": "Report survey",
+    "report_title": "Report this survey",
+    "report_reasons": {
+      "prohibited":    "Prohibited content (alcohol, gambling, etc.)",
+      "spam":          "Spam or not a genuine academic survey",
+      "not_academic":  "Not a legitimate academic survey",
+      "inappropriate": "Inappropriate content",
+      "other":         "Other"
+    },
+    "report_success": "Thank you. Our team will review this survey within 24 hours."
+  },
+
+  "notifications": {
+    "new_survey":      "New survey matching your profile — +{{points}} pts when you complete it!",
+    "points_expiry":   "Your {{points}} points expire in {{days}} days. Redeem now!",
+    "boost_expired":   "Your boost for '{{title}}' has expired.",
+    "target_reached":  "Congratulations! Your survey '{{title}}' has reached {{target}} responses.",
+    "referral_signup": "Your friend from {{university}} just signed up using your referral code! +{{points}} pts credited.",
+    "voucher_ready":   "Your {{brand}} voucher is ready! Code: {{code}}"
+  },
+
+  "errors": {
+    "not_edu_email":          "Please use a valid .edu.my university email.",
+    "duplicate_response":     "You have already responded to this survey.",
+    "token_invalid":          "Invalid token. Check the code from your Google Form thank-you page.",
+    "token_expired":          "Token expired. Complete the survey and submit within 2 hours.",
+    "insufficient_credits":   "Insufficient credits to post a survey.",
+    "insufficient_points":    "Insufficient points for this redemption.",
+    "rate_limited":           "Too many attempts. Please try again in an hour.",
+    "general":                "An error occurred. Please try again or contact support@researchlink.my"
+  },
+
+  "pdpa": {
+    "notice_title": "Data Protection Notice",
+    "notice_body":  "ResearchLink Malaysia collects and processes your personal data (email, university, faculty, year of study) to operate the academic survey exchange platform. Your data is processed under the Personal Data Protection Act (PDPA) 2010 (Amendment 2024). You have the right to access, correct, transfer, and delete your data at any time.",
+    "dpo_contact":  "Contact our Data Protection Officer (DPO): dpo@researchlink.my",
+    "anonymised_note": "Respondent data is never revealed to researchers. Only aggregated, non-personally-identifiable information is shared."
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "common": {
+    "app_name": "ResearchLink Malaysia",
+    "tagline": "Platform Pertukaran Penyelidikan Pelajar Malaysia",
+    "loading": "Memuatkan...",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "confirm": "Sahkan",
+    "back": "Kembali",
+    "next": "Seterusnya",
+    "submit": "Hantar",
+    "close": "Tutup",
+    "search": "Cari...",
+    "filter": "Tapisan",
+    "export": "Eksport",
+    "download": "Muat turun",
+    "share": "Kongsi",
+    "view": "Lihat",
+    "edit": "Sunting",
+    "delete": "Padam",
+    "success": "Berjaya",
+    "error": "Ralat",
+    "required": "Diperlukan"
+  },
+  "auth": {
+    "signin_title": "Selamat Datang ke ResearchLink",
+    "signin_subtitle": "Daftar masuk dengan e-mel universiti .edu.my anda",
+    "signin_btn": "Daftar masuk dengan Google (.edu.my)",
+    "signin_note": "E-mel universiti Malaysia sahaja",
+    "not_edu_email": "E-mel ini bukan e-mel universiti Malaysia yang sah. Sila gunakan alamat .edu.my anda.",
+    "consent_title": "Tetapan Kebenaran Data",
+    "consent_subtitle": "Pilih cara anda ingin mengambil bahagian dalam platform ini",
+    "consent_research": "Sertai kaji selidik akademik sebagai responden",
+    "consent_brand": "Sertai kempen jenama korporat (Insight Blast)",
+    "consent_note": "Anda boleh menukar tetapan ini pada bila-bila masa di profil anda.",
+    "consent_pdpa": "Data anda dilindungi di bawah Akta Perlindungan Data Peribadi (PDPA) 2010 (Pindaan 2024).",
+    "consent_required": "Sekurang-kurangnya satu kebenaran diperlukan untuk menggunakan platform.",
+    "consent_save": "Simpan & Teruskan"
+  },
+  "nav": {
+    "feed": "Suapan kaji selidik",
+    "my_surveys": "Kaji selidik saya",
+    "post_survey": "Hantar kaji selidik",
+    "rewards": "Mata & baucar",
+    "profile": "Profil",
+    "admin": "Admin",
+    "logout": "Log keluar"
+  },
+  "feed": {
+    "title": "Kaji selidik terbuka",
+    "subtitle": "{{university}} · {{programme}} · {{credits}} kredit",
+    "filter_all": "Semua",
+    "no_surveys": "Tiada kaji selidik buat masa ini.",
+    "respond_btn": "Balas",
+    "responded_btn": "Selesai!",
+    "boosted_badge": "Ditingkatkan",
+    "stats": {
+      "credits": "Kredit",
+      "points": "Mata",
+      "completed": "Selesai",
+      "active_surveys": "Kaji selidik aktif"
+    }
+  },
+  "errors": {
+    "not_edu_email": "Sila gunakan e-mel universiti .edu.my yang sah.",
+    "duplicate_response": "Anda telah pun menjawab kaji selidik ini.",
+    "token_invalid": "Token tidak sah.",
+    "token_expired": "Token telah tamat tempoh.",
+    "insufficient_credits": "Kredit tidak mencukupi.",
+    "general": "Ralat berlaku. Sila cuba lagi."
+  }
+}

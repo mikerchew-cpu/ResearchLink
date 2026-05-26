@@ -1,0 +1,86 @@
+{
+  "name": "ResearchLink Malaysia",
+  "short_name": "ResearchLink",
+  "description": "Malaysia's verified student research exchange platform. Complete FYP surveys, earn ZUS Coffee and TNG eWallet rewards.",
+  "start_url": "/feed",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F1EFE8",
+  "theme_color": "#1D9E75",
+  "lang": "en-MY",
+  "scope": "/",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/feed.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Survey feed"
+    },
+    {
+      "src": "/screenshots/rewards.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Rewards"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Browse surveys",
+      "short_name": "Feed",
+      "description": "Browse open surveys and earn points",
+      "url": "/feed",
+      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Post a survey",
+      "short_name": "Post",
+      "description": "Post your FYP or research survey",
+      "url": "/post",
+      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "My rewards",
+      "short_name": "Rewards",
+      "description": "Check points and redeem vouchers",
+      "url": "/rewards",
+      "icons": [{ "src": "/icons/icon-96.png", "sizes": "96x96" }]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}
