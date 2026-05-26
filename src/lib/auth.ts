@@ -1,14 +1,6 @@
 import type { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createClient } from "@supabase/supabase-js";
-
-function getSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return null;
-  return createClient(url, key);
-}
 
 declare module "next-auth" {
   interface Session {
@@ -39,98 +31,97 @@ declare module "next-auth" {
   }
 }
 
-function extractUniversity(email: string): string | null {
-  const domain = email.split("@")[1]?.toLowerCase();
-  if (!domain) return null;
-  if (domain.endsWith(".edu.my")) return domain;
-  if (["xmu.edu.my", "um.edu.my", "ukm.edu.my", "upm.edu.my", "usm.edu.my", "utm.edu.my", "uia.edu.my", "monash.edu.my", "nottingham.edu.my", "taylors.edu.my", "sunway.edu.my"].includes(domain)) return domain;
-  return null;
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
 }
 
-async function upsertUser(email: string, name: string, image?: string | null) {
-  const sb = getSupabase();
-  if (!sb) return null;
-  const uni = extractUniversity(email) || "university-unknown";
-  const { data: existing } = await sb
-    .from("users")
-    .select("*")
-    .eq("email", email)
-    .maybeSingle();
-  if (!existing) {
-    await sb.from("users").insert({
-      email,
-      name,
-      avatar_url: image,
-      university: uni,
-      role: "respondent",
-      credit_balance: 3,
-      points_balance: 0,
-      has_consented: false,
-    }).maybeSingle();
-    const { data: created } = await sb
-      .from("users")
-      .select("*")
-      .eq("email", email)
-      .maybeSingle();
-    return created;
-  }
-  return existing;
+function generateOtpCode(): string {
+  return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    }),
     CredentialsProvider({
-      id: "email-otp",
-      name: "Email OTP",
+      id: "phone-otp",
+      name: "Phone OTP",
       credentials: {
-        email: { label: "Email", type: "email" },
-        token: { label: "OTP Code", type: "text" },
+        phone: { label: "Phone", type: "tel" },
+        code: { label: "OTP Code", type: "text" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.token) return null;
-        const { email, token } = credentials;
-        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-        if (!supabaseUrl || !supabaseAnonKey) return null;
-        const sb = createClient(supabaseUrl, supabaseAnonKey);
-        const { data, error } = await sb.auth.verifyOtp({
-          email,
-          token,
-          type: "email",
-        });
-        if (error || !data.user) return null;
-        const uni = extractUniversity(email);
-        if (!uni) return null;
-        const user = await upsertUser(email, email.split("@")[0]);
-        if (!user) return null;
+        if (!credentials?.phone || !credentials?.code) return null;
+        const phone = credentials.phone.replace(/[^0-9]/g, "");
+        const code = credentials.code;
+        const sb = getSupabase();
+        if (!sb) return null;
+        const { data: otpRecord } = await sb
+          .from("otp_codes")
+          .select("*")
+          .eq("phone", phone)
+          .eq("code", code)
+          .eq("used", false)
+          .gte("expires_at", new Date().toISOString())
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (!otpRecord) return null;
+        await sb.from("otp_codes").update({ used: true }).eq("id", otpRecord.id);
+        const { data: existing } = await sb
+          .from("users")
+          .select("*")
+          .eq("telephone_no", phone)
+          .maybeSingle();
+        if (!existing) {
+          await sb.from("users").insert({
+            email: `${phone}@phone.researchlink.app`,
+            name: `User ${phone.slice(-4)}`,
+            telephone_no: phone,
+            university: "unknown",
+            role: "respondent",
+            credit_balance: 3,
+            points_balance: 0,
+            has_consented: false,
+          }).maybeSingle();
+          const { data: created } = await sb
+            .from("users")
+            .select("*")
+            .eq("telephone_no", phone)
+            .maybeSingle();
+          if (!created) return null;
+          return {
+            id: created.id,
+            email: created.email,
+            name: created.name,
+            role: created.role,
+            university: created.university,
+            programme: created.programme || "",
+            year_of_study: created.year_of_study || "",
+            credit_balance: created.credit_balance,
+            points_balance: created.points_balance,
+            has_consented: created.has_consented,
+            telephone_no: created.telephone_no || "",
+          };
+        }
         return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          university: user.university,
-          programme: user.programme || "",
-          year_of_study: user.year_of_study || "",
-          credit_balance: user.credit_balance,
-          points_balance: user.points_balance,
-          has_consented: user.has_consented,
-          telephone_no: user.telephone_no || "",
+          id: existing.id,
+          email: existing.email,
+          name: existing.name,
+          role: existing.role,
+          university: existing.university,
+          programme: existing.programme || "",
+          year_of_study: existing.year_of_study || "",
+          credit_balance: existing.credit_balance,
+          points_balance: existing.points_balance,
+          has_consented: existing.has_consented,
+          telephone_no: existing.telephone_no || "",
         };
       },
     }),
   ],
   callbacks: {
-    async signIn({ user, account }) {
-      if (account?.provider === "google") {
-        const email = user.email!;
-        await upsertUser(email, user.name!, user.image);
-      }
-      return true;
-    },
     async session({ session, token }) {
       if (token.sub) {
         const sb = getSupabase();
