@@ -6,20 +6,20 @@
 -- ============================================================
 
 -- ── Waitlist (pre-launch email capture) ──────────────────────
-create table public.waitlist (
-  id           uuid primary key default uuid_generate_v4(),
-  email        text unique not null,
-  university   text,
-  role         text not null default 'respondent',  -- 'researcher' | 'respondent'
-  signed_up_at timestamptz not null default now(),
-  invited_at   timestamptz,   -- when we sent the launch invite
-  converted    boolean not null default false  -- true once they created an account
-);
+-- Created in 04_new_features.sql — uncomment below if running 05 standalone
+-- create table if not exists public.waitlist (
+--   id           uuid primary key default uuid_generate_v4(),
+--   email        text unique not null,
+--   university   text,
+--   role         text not null default 'respondent',
+--   signed_up_at timestamptz not null default now(),
+--   invited_at   timestamptz,
+--   converted    boolean not null default false
+-- );
 
-alter table public.waitlist enable row level security;
-create policy "waitlist: admin only" on public.waitlist for all using (is_admin());
--- Public insert for signups (no auth required for waitlist)
-create policy "waitlist: public insert" on public.waitlist for insert with check (true);
+-- alter table public.waitlist enable row level security;
+-- create policy "waitlist: admin only" on public.waitlist for all using (is_admin());
+-- create policy "waitlist: public insert" on public.waitlist for insert with check (true);
 
 -- ── Supervisor ↔ student linking ─────────────────────────────
 create table public.supervisor_students (
