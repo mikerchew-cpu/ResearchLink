@@ -38,16 +38,32 @@ export async function GET(req: NextRequest) {
       .eq("reviewed", false)
       .order("created_at", { ascending: true });
 
-    const mapped = (queue || []).map((item: any) => ({
+    const { data: pendingSurveys } = await supabaseAdmin
+      .from("surveys")
+      .select("id, title, status, created_at, creator_id")
+      .eq("status", "pending")
+      .order("created_at", { ascending: true });
+
+    const mappedQueue = (queue || []).map((item: any) => ({
       id: item.id,
       survey_id: item.survey_id,
       title: item.survey?.title || "Unknown",
       reason: item.reason,
       reported_by: item.reported_by,
       created_at: item.created_at,
+      type: "report",
     }));
 
-    return NextResponse.json({ queue: mapped });
+    const mappedPending = (pendingSurveys || []).map((s: any) => ({
+      id: "pending-" + s.id,
+      survey_id: s.id,
+      title: s.title,
+      reason: "Awaiting approval",
+      created_at: s.created_at,
+      type: "pending",
+    }));
+
+    return NextResponse.json({ queue: [...mappedPending, ...mappedQueue] });
   }
 
   const { data: reports } = await supabaseAdmin
