@@ -1,10 +1,4 @@
 {
-  "cron": [
-    {
-      "path": "/api/cron/points-expiry",
-      "schedule": "0 0 * * 0"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
