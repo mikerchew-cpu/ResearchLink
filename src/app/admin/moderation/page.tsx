@@ -48,7 +48,13 @@ export default function ModerationPage() {
     }
   }
 
-  if (status === "loading") return null;
+  if (status === "loading") return (
+    <AppShell user={{}} activePage="admin">
+      <div style={{ maxWidth: 640, margin: "0 auto", padding: "20px 16px 80px" }}>
+        <div style={{ textAlign: "center", padding: 40, fontSize: 13, color: "var(--color-text-tertiary)" }}>Loading...</div>
+      </div>
+    </AppShell>
+  );
 
   return (
     <AppShell user={session?.user ?? {}} activePage="admin">
