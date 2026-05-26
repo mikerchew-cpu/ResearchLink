@@ -17,18 +17,39 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [referralCode, setReferralCode] = useState("");
   const [referralStats, setReferralStats] = useState({ count: 0, points: 0 });
+  const [telephone, setTelephone] = useState("");
+  const [profileSaving, setProfileSaving] = useState(false);
 
   useEffect(() => {
     if (status === "unauthenticated") { router.push("/auth/signin"); return; }
     if (status === "authenticated") {
       setResearchConsent(true);
       setBrandConsent(false);
+      setTelephone(session?.user?.telephone_no || "");
       fetch("/api/referral").then(r => r.json()).then(d => {
         setReferralCode(d.code || "");
         setReferralStats({ count: d.count || 0, points: d.points || 0 });
       }).catch(() => {});
     }
-  }, [status, router]);
+  }, [status, router, session]);
+
+  async function handleSaveProfile() {
+    setProfileSaving(true);
+    try {
+      const res = await fetch("/api/profile/update", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ telephone_no: telephone }),
+      });
+      if (!res.ok) throw new Error("Failed");
+      toast.success(t("common.success"));
+      await update();
+    } catch {
+      toast.error(t("errors.general"));
+    } finally {
+      setProfileSaving(false);
+    }
+  }
 
   async function handleSaveConsent() {
     setSaving(true);
@@ -111,6 +132,25 @@ export default function ProfilePage() {
               <div style={{ fontSize: 10, color: "var(--color-text-tertiary)" }}>{t("feed.stats.points")}</div>
             </div>
           </div>
+        </div>
+
+        {/* WhatsApp Telephone */}
+        <div style={{ background: "var(--color-background-primary)", border: "0.5px solid var(--color-border-tertiary)", borderRadius: 12, padding: "20px", marginBottom: 16 }}>
+          <h2 style={{ fontSize: 14, fontWeight: 600, margin: "0 0 4px" }}>WhatsApp Notifications</h2>
+          <p style={{ fontSize: 11, color: "var(--color-text-tertiary)", margin: "0 0 12px" }}>
+            Add your phone number to receive survey broadcasts via WhatsApp
+          </p>
+          <input
+            type="tel"
+            value={telephone}
+            onChange={e => setTelephone(e.target.value)}
+            placeholder="e.g. 60123456789"
+            style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, marginBottom: 10, boxSizing: "border-box" }}
+          />
+          <button onClick={handleSaveProfile} disabled={profileSaving}
+            style={{ padding: "8px 20px", background: "var(--rl-teal)", color: "white", border: "none", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+            {profileSaving ? t("common.loading") : "Save number"}
+          </button>
         </div>
 
         {/* PDPA Consent */}

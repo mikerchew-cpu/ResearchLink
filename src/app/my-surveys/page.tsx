@@ -35,6 +35,27 @@ export default function MySurveysPage() {
     } catch {}
   }
 
+  async function handleBroadcast(surveyId: string) {
+    toast.loading("Broadcasting...");
+    try {
+      const res = await fetch("/api/whatsapp-broadcast", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ survey_id: surveyId }),
+      });
+      const data = await res.json();
+      toast.dismiss();
+      if (res.ok) {
+        toast.success(`WhatsApp sent to ${data.sent} of ${data.total} students`);
+      } else {
+        toast.error(data.error || "Broadcast failed");
+      }
+    } catch {
+      toast.dismiss();
+      toast.error(t("errors.general"));
+    }
+  }
+
   async function handleBoost(surveyId: string, tier: "basic" | "featured") {
     try {
       const res = await fetch("/api/boost", {
@@ -101,12 +122,20 @@ export default function MySurveysPage() {
                   }} />
                 </div>
 
-                {!survey.is_boosted && survey.status === "active" && (
-                  <button onClick={() => setShowBoost(showBoost === survey.id ? null : survey.id)}
-                    style={{ fontSize: 11, color: "var(--rl-teal)", background: "none", border: "0.5px solid var(--rl-teal)", borderRadius: 6, padding: "4px 10px", cursor: "pointer" }}>
-                    Boost this survey
-                  </button>
-                )}
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                  {survey.status === "active" && (
+                    <button onClick={() => handleBroadcast(survey.id)}
+                      style={{ fontSize: 11, color: "var(--rl-teal)", background: "none", border: "0.5px solid var(--rl-teal)", borderRadius: 6, padding: "4px 10px", cursor: "pointer" }}>
+                      Broadcast WhatsApp
+                    </button>
+                  )}
+                  {!survey.is_boosted && survey.status === "active" && (
+                    <button onClick={() => setShowBoost(showBoost === survey.id ? null : survey.id)}
+                      style={{ fontSize: 11, color: "var(--rl-teal)", background: "none", border: "0.5px solid var(--rl-teal)", borderRadius: 6, padding: "4px 10px", cursor: "pointer" }}>
+                      Boost
+                    </button>
+                  )}
+                </div>
 
                 {showBoost === survey.id && (
                   <div style={{ marginTop: 10, display: "flex", gap: 8 }}>

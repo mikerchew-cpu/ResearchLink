@@ -2,13 +2,19 @@
 
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useI18n } from "@/components/I18nProvider";
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const { data: session } = useSession();
   const router = useRouter();
   const { t } = useI18n();
+
+  const [email, setEmail] = useState("");
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (session) {
@@ -16,6 +22,55 @@ export default function SignInPage() {
       else router.push("/feed");
     }
   }, [session, router]);
+
+  async function handleSendOtp(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch("/api/auth/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        if (data.error === "not-edu-email") {
+          toast.error("Please use a .edu.my university email");
+        } else {
+          toast.error("Failed to send code");
+        }
+        return;
+      }
+      setOtpSent(true);
+      toast.success("Check your email for the verification code");
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleVerifyOtp(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const result = await signIn("email-otp", {
+        email,
+        token: otp,
+        redirect: false,
+        callbackUrl: "/feed",
+      });
+      if (result?.error) {
+        toast.error("Invalid code. Please try again.");
+        return;
+      }
+      router.push("/feed");
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div style={{ minHeight: "100dvh", background: "var(--color-background-tertiary)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }}>
@@ -51,6 +106,52 @@ export default function SignInPage() {
             </svg>
             {t("auth.signin_btn")}
           </button>
+
+          <div style={{ display: "flex", alignItems: "center", gap: 12, margin: "20px 0" }}>
+            <div style={{ flex: 1, height: "0.5px", background: "var(--color-border-secondary)" }} />
+            <span style={{ fontSize: 12, color: "var(--color-text-tertiary)" }}>or</span>
+            <div style={{ flex: 1, height: "0.5px", background: "var(--color-border-secondary)" }} />
+          </div>
+
+          {!otpSent ? (
+            <form onSubmit={handleSendOtp}>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+                placeholder="you@university.edu.my"
+                style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 10, fontSize: 13, marginBottom: 12, boxSizing: "border-box" }}
+              />
+              <button type="submit" disabled={loading}
+                style={{ width: "100%", padding: "12px", background: loading ? "#9FE1CB" : "var(--rl-teal)", color: "white", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}>
+                {loading ? "Sending..." : "Send verification code"}
+              </button>
+            </form>
+          ) : (
+            <form onSubmit={handleVerifyOtp}>
+              <p style={{ fontSize: 12, color: "var(--color-text-secondary)", marginBottom: 12, textAlign: "center" }}>
+                Enter the 6-digit code sent to <strong>{email}</strong>
+              </p>
+              <input
+                type="text"
+                required
+                value={otp}
+                onChange={e => setOtp(e.target.value)}
+                placeholder="000000"
+                maxLength={6}
+                style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 10, fontSize: 18, marginBottom: 12, textAlign: "center", letterSpacing: 8, boxSizing: "border-box" }}
+              />
+              <button type="submit" disabled={loading || otp.length < 6}
+                style={{ width: "100%", padding: "12px", background: loading ? "#9FE1CB" : "var(--rl-teal)", color: "white", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}>
+                {loading ? "Verifying..." : "Sign in"}
+              </button>
+              <button type="button" onClick={() => { setOtpSent(false); setOtp(""); }}
+                style={{ width: "100%", padding: "10px", background: "none", border: "none", fontSize: 12, color: "var(--color-text-tertiary)", cursor: "pointer", marginTop: 8 }}>
+                Use a different email
+              </button>
+            </form>
+          )}
 
           <div style={{ marginTop: 16, padding: "10px 14px", background: "var(--color-background-info)", borderRadius: 8, fontSize: 11, color: "var(--color-text-info)" }}>
             {t("auth.signin_note")}
