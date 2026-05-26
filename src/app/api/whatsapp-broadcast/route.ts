@@ -21,10 +21,10 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Not found or not your survey" }, { status: 404 });
   }
 
-  const watiApiKey = process.env.WATI_API_KEY;
-  const watiApiUrl = process.env.WATI_API_URL;
-  if (!watiApiKey || !watiApiUrl) {
-    return NextResponse.json({ error: "WhatsApp not configured" }, { status: 501 });
+  const ultramsgToken = process.env.ULTRAMSG_TOKEN;
+  const ultramsgInstanceId = process.env.ULTRAMSG_INSTANCE_ID;
+  if (!ultramsgToken || !ultramsgInstanceId) {
+    return NextResponse.json({ error: "UltraMsg not configured" }, { status: 501 });
   }
 
   const surveyUrl = survey.data.survey_url;
@@ -43,17 +43,20 @@ export async function POST(req: NextRequest) {
   let sentCount = 0;
   for (const student of students) {
     try {
-      const phone = student.telephone_no!.startsWith("+")
-        ? student.telephone_no!
-        : `+6${student.telephone_no!}`;
-      const res = await fetch(`${watiApiUrl}/api/v1/sendSessionMessage/${encodeURIComponent(phone)}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${watiApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messageText: defaultMessage }),
+      const phone = student.telephone_no!.replace(/[^0-9]/g, "");
+      const params = new URLSearchParams({
+        token: ultramsgToken,
+        to: phone,
+        body: defaultMessage,
       });
+      const res = await fetch(
+        `https://api.ultramsg.com/${ultramsgInstanceId}/messages/chat`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: params.toString(),
+        }
+      );
       if (res.ok) sentCount++;
     } catch {
       // skip failed sends
