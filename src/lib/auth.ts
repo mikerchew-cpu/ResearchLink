@@ -81,7 +81,7 @@ export const authOptions: NextAuthOptions = {
             telephone_no: phone,
             university: "unknown",
             role: "respondent",
-            credit_balance: 3,
+            credit_balance: 8,
             points_balance: 0,
             has_consented: false,
           }).maybeSingle();
