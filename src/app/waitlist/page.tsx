@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 export default function WaitlistPage() {
   const { t } = useI18n();
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [university, setUniversity] = useState("");
   const [role, setRole] = useState("respondent");
   const [submitted, setSubmitted] = useState(false);
@@ -22,12 +22,17 @@ export default function WaitlistPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const cleaned = phone.replace(/[^0-9]/g, "");
+    if (cleaned.length < 10) {
+      toast.error("Enter a valid Malaysian phone number");
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, university, role }),
+        body: JSON.stringify({ phone: cleaned, university, role }),
       });
       if (!res.ok) throw new Error("Failed");
       setSubmitted(true);
@@ -47,7 +52,7 @@ export default function WaitlistPage() {
             <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
             <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 8px" }}>You're on the list!</h1>
             <p style={{ fontSize: 14, color: "var(--color-text-secondary)", margin: 0 }}>
-              We'll email you at <strong>{email}</strong> when ResearchLink launches. Share with your friends!
+              We'll WhatsApp you at <strong>+{phone.replace(/[^0-9]/g, "")}</strong> when ResearchLink launches.
             </p>
           </div>
         </div>
@@ -77,21 +82,21 @@ export default function WaitlistPage() {
 
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: 14 }}>
-              <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>University email</label>
-              <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                placeholder="you@university.edu.my"
-                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13 }} />
+              <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Phone number</label>
+              <input type="tel" required value={phone} onChange={e => setPhone(e.target.value)}
+                placeholder="60123456789"
+                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: "var(--color-text-primary)" }} />
             </div>
             <div style={{ marginBottom: 14 }}>
               <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>University (optional)</label>
               <input type="text" value={university} onChange={e => setUniversity(e.target.value)}
                 placeholder="e.g. Xiamen University Malaysia"
-                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13 }} />
+                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: "var(--color-text-primary)" }} />
             </div>
             <div style={{ marginBottom: 20 }}>
               <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>I am a...</label>
               <select value={role} onChange={e => setRole(e.target.value)}
-                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13 }}>
+                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: "var(--color-text-primary)" }}>
                 <option value="respondent">Student respondent (earn rewards)</option>
                 <option value="researcher">Researcher (post surveys)</option>
               </select>
@@ -101,6 +106,12 @@ export default function WaitlistPage() {
               {loading ? "Joining..." : "Join the waitlist"}
             </button>
           </form>
+
+          <div style={{ marginTop: 20, textAlign: "center" }}>
+            <a href="/auth/signin" style={{ fontSize: 12, color: "var(--rl-teal)", textDecoration: "none", fontWeight: 500 }}>
+              Already have an account? Sign in
+            </a>
+          </div>
         </div>
       </div>
     </div>

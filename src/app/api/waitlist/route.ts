@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabaseAdmin } from "@/lib/supabase";
 
 export async function POST(req: NextRequest) {
-  const { email, university, role } = await req.json();
+  const { phone, university, role } = await req.json();
 
-  if (!email) return NextResponse.json({ error: "Email required" }, { status: 400 });
+  const cleaned = (phone || "").replace(/[^0-9]/g, "");
+  if (!cleaned || cleaned.length < 10)
+    return NextResponse.json({ error: "Valid phone number required" }, { status: 400 });
 
   const { error } = await supabaseAdmin.from("waitlist").insert({
-    email,
+    email: cleaned,
     university: university || null,
     role: role || "respondent",
   });
