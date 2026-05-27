@@ -50,9 +50,9 @@ const nextConfig = {
   // Redirects
   async redirects() {
     return [
-      // Root → waitlist (pre-launch) or feed (post-launch)
+      // Root → signin (pre-launch) or feed (post-launch)
       // Change destination to "/feed" when platform goes live
-      { source: "/", destination: "/waitlist", permanent: false },
+      { source: "/", destination: "/auth/signin", permanent: false },
     ];
   },
 
