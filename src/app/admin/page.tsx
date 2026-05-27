@@ -184,6 +184,7 @@ export default function AdminPage() {
               { label: "Generate Gen-Z report",    href: "/admin/reports",    color: "#7F77DD" },
               { label: "Export platform data",     href: "/api/admin/export?type=platform&format=json", color: "#1D9E75" },
               { label: "View all campaigns",       href: "/admin/campaigns",  color: "#BA7517" },
+              { label: "Import phone numbers",     href: "/admin/import-phones", color: "#1D9E75" },
             ].map(({ label, href, color }) => (
               <Link key={label} href={href}
                 style={{ padding: "8px 16px", border: `0.5px solid ${color}`, borderRadius: 8, fontSize: 12, fontWeight: 500, color, textDecoration: "none", background: "transparent" }}>
