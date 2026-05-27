@@ -7,5 +7,5 @@ export default async function RootPage() {
   if (session?.user) {
     redirect("/feed");
   }
-  redirect("/waitlist");
+  redirect("/auth/signin");
 }
