@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useI18n } from "@/components/I18nProvider";
+import { MALAYSIA_UNIVERSITIES } from "@/data/universities";
 import toast from "react-hot-toast";
 
 export default function WaitlistPage() {
@@ -89,9 +90,14 @@ export default function WaitlistPage() {
             </div>
             <div style={{ marginBottom: 14 }}>
               <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>University (optional)</label>
-              <input type="text" value={university} onChange={e => setUniversity(e.target.value)}
-                placeholder="e.g. Xiamen University Malaysia"
-                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: "var(--color-text-primary)" }} />
+              <select value={university} onChange={e => setUniversity(e.target.value)}
+                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: university ? "var(--color-text-primary)" : "var(--color-text-tertiary)" }}>
+                <option value="" disabled hidden>Select your university</option>
+                <option value="">Prefer not to say</option>
+                {MALAYSIA_UNIVERSITIES.map(u => (
+                  <option key={u} value={u} style={{ color: "var(--color-text-primary)" }}>{u}</option>
+                ))}
+              </select>
             </div>
             <div style={{ marginBottom: 20 }}>
               <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>I am a...</label>
