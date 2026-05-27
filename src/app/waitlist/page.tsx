@@ -86,7 +86,7 @@ export default function WaitlistPage() {
               <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Phone number</label>
               <input type="tel" required value={phone} onChange={e => setPhone(e.target.value)}
                 placeholder="60123456789"
-                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: "#fff", background: "#1a1a1a" }} />
+                style={{ width: "100%", padding: "9px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 8, fontSize: 13, color: "var(--color-text-primary)", background: "var(--color-background-secondary)" }} />
             </div>
             <div style={{ marginBottom: 14 }}>
               <label style={{ display: "block", fontSize: 12, fontWeight: 600, marginBottom: 4 }}>University (optional)</label>

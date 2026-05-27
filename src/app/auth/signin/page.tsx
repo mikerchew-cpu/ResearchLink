@@ -104,7 +104,7 @@ export default function SignInPage() {
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="60123456789"
-                style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 10, fontSize: 16, marginBottom: 12, boxSizing: "border-box", textAlign: "center", color: "#fff", background: "#1a1a1a" }}
+                style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 10, fontSize: 16, marginBottom: 12, boxSizing: "border-box", textAlign: "center", color: "var(--color-text-primary)", background: "var(--color-background-secondary)" }}
               />
               <div style={{ fontSize: 11, color: "var(--color-text-tertiary)", marginBottom: 16, textAlign: "center" }}>
                 Your number will be used for survey notifications
@@ -126,7 +126,7 @@ export default function SignInPage() {
                 onChange={e => setCode(e.target.value)}
                 placeholder="000000"
                 maxLength={6}
-                style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 10, fontSize: 18, marginBottom: 12, textAlign: "center", letterSpacing: 8, boxSizing: "border-box", color: "#fff", background: "#1a1a1a" }}
+                style={{ width: "100%", padding: "10px 12px", border: "0.5px solid var(--color-border-secondary)", borderRadius: 10, fontSize: 18, marginBottom: 12, textAlign: "center", letterSpacing: 8, boxSizing: "border-box", color: "var(--color-text-primary)", background: "var(--color-background-secondary)" }}
               />
               <button type="submit" disabled={loading || code.length < 4}
                 style={{ width: "100%", padding: "12px", background: loading ? "#9FE1CB" : "var(--rl-teal)", color: "white", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}>
