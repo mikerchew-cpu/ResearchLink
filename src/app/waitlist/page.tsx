@@ -51,9 +51,9 @@ export default function WaitlistPage() {
         <div style={{ maxWidth: 400, width: "100%", textAlign: "center" }}>
           <div style={{ background: "var(--color-background-primary)", borderRadius: 16, border: "0.5px solid var(--color-border-tertiary)", padding: "40px 28px" }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>🎉</div>
-            <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 8px" }}>You're on the list!</h1>
+            <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 8px" }}>You're in!</h1>
             <p style={{ fontSize: 14, color: "var(--color-text-secondary)", margin: 0 }}>
-              We'll WhatsApp you at <strong>+{phone.replace(/[^0-9]/g, "")}</strong> when ResearchLink launches.
+              We'll WhatsApp you at <strong>+{phone.replace(/[^0-9]/g, "")}</strong> with rewards and survey opportunities.
             </p>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function WaitlistPage() {
         </div>
 
         <div style={{ background: "var(--color-background-primary)", borderRadius: 16, border: "0.5px solid var(--color-border-tertiary)", padding: "32px 24px" }}>
-          <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 6px" }}>Join the waitlist</h1>
+          <h1 style={{ fontSize: 20, fontWeight: 700, margin: "0 0 6px" }}>Join the platform and get rewards</h1>
           <p style={{ fontSize: 13, color: "var(--color-text-secondary)", margin: "0 0 20px" }}>
             Complete FYP surveys, earn ZUS Coffee & TNG eWallet rewards.
           </p>
@@ -109,7 +109,7 @@ export default function WaitlistPage() {
             </div>
             <button type="submit" disabled={loading}
               style={{ width: "100%", padding: "12px", background: loading ? "#9FE1CB" : "var(--rl-teal)", color: "white", border: "none", borderRadius: 10, fontSize: 14, fontWeight: 600, cursor: loading ? "not-allowed" : "pointer" }}>
-              {loading ? "Joining..." : "Join the waitlist"}
+              {loading ? "Joining..." : "Join & Rewards"}
             </button>
           </form>
 
